@@ -25,7 +25,7 @@ def retry(n, delay, backoff, max_delay):
             except Exception as e:
                 if tried < n:
                     need_delay = delay + tried * backoff
-                    delay_time = need_delay if need_delay <= max_delay else max_delay
+                    delay_time = min(need_delay, max_delay)
                     time.sleep(delay_time)
                     return wrapped_function(tried, *args, **kwargs)
                 raise e
