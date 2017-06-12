@@ -14,3 +14,7 @@ Some useful decorators for Python.
 # Test
 
     python test/test.py
+    
+# License
+
+MIT

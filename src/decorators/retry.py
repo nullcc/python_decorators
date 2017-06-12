@@ -2,12 +2,16 @@
 
 from datetime import datetime
 from functools import wraps
+import time
 
 
-def retry(n):
+def retry(n, delay, backoff, max_delay):
     """
     最多尝试执行n次函数，成功则停止尝试，超过n次未成功则报错
     :param n:
+    :param delay:
+    :param backoff:
+    :param max_delay:
     :return:
     """
     def decorator(func):
@@ -20,6 +24,9 @@ def retry(n):
                 return result
             except Exception as e:
                 if tried < n:
+                    need_delay = delay + tried * backoff
+                    delay_time = need_delay if need_delay <= max_delay else max_delay
+                    time.sleep(delay_time)
                     return wrapped_function(tried, *args, **kwargs)
                 raise e
         return wrapped_function
