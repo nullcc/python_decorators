@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from threading import Thread, Timer, _Timer
+from threading import _Timer
 
 
 class CustomTimer(_Timer):
